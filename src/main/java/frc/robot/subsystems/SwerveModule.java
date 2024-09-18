@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
 
-public class SwerveModule extends SubsystemBase {	
-    private final CANSparkMax m_driveMotor;
+public class SwerveModule extends SubsystemBase {	//this represents one of the for modules
+    private final CANSparkMax m_driveMotor; 
     private final CANSparkMax m_turningMotor
     ;
     private final RelativeEncoder m_driveEncoder;
-    private final RelativeEncoder m_turningEncoder;
+    private final RelativeEncoder m_turningEncoder;      //sets up most of the required parts as variables to use for later.
     private final CANcoder absoluteEncoder;
 
     private final SparkPIDController m_drivePIDController;
@@ -30,7 +30,7 @@ public class SwerveModule extends SubsystemBase {
     private SwerveModuleState m_desiredState; // class for desired angle and velocity
     private double offset;
 
-    public SwerveModule(int driveMotorID, int turningMotorID, int CANCoderID, double offset) {
+    public SwerveModule(int driveMotorID, int turningMotorID, int CANCoderID, double offset) { // makes sure to connet the variable to there correct values.
         m_driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
         m_turningMotor = new CANSparkMax(turningMotorID, MotorType.kBrushless);
 
@@ -56,6 +56,7 @@ public class SwerveModule extends SubsystemBase {
         m_desiredState = new SwerveModuleState();
     }
 
+    
     public void setDesiredState(SwerveModuleState desiredState) {
         //TODO Optimize the desired state to avoid unnecessary rotation
         //m_desiredState = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getEncoderAngle()));

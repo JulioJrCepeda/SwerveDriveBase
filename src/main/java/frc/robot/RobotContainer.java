@@ -25,21 +25,21 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain = new Drivetrain();
 
   private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);  // Sets up the Controller as a variable that we can later call
 
   // private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
 
-    CommandScheduler.getInstance().schedule(new AlignWheelsCommand(m_drivetrain));
+    CommandScheduler.getInstance().schedule(new AlignWheelsCommand(m_drivetrain));  // Calls a command once.
 
 
     // autoChooser = AutoBuilder.buildAutoChooser();
 
-    m_drivetrain.setDefaultCommand(
+    m_drivetrain.setDefaultCommand(  // Call a command constantly it is for the main robot movment.
         new RunCommand(
           () -> m_drivetrain.drive(
-            applyDeadband(m_driverController::getLeftY, 0.1), 
+            applyDeadband(m_driverController::getLeftY, 0.1), // it was 3 inputs the x y and w which is for rotation
             applyDeadband(m_driverController::getLeftX, 0.1), 
             applyDeadband(m_driverController::getRightX, 0.1)
           ),
@@ -52,7 +52,7 @@ public class RobotContainer {
 
       configureBindings();
   }
-  private DoubleSupplier applyDeadband(DoubleSupplier supplier, double deadband) {
+  private DoubleSupplier applyDeadband(DoubleSupplier supplier, double deadband) { // Function so that it dosen't drift
     return () -> {
         double value = supplier.getAsDouble();
         if (Math.abs(value) > deadband) {
@@ -68,7 +68,7 @@ public class RobotContainer {
     //TODO  m_driverController.start().onTrue(
 		// 	 new InstantCommand(() -> m_drivetrain.resetPose(new Pose2d()), m_drivetrain)
 		//  );
-    m_driverController.a().onTrue(new AlignWheelsCommand(m_drivetrain));
+    m_driverController.a().onTrue(new AlignWheelsCommand(m_drivetrain)); // when you press the A button it should Allign the wheels
   }
 
   public Command getAutonomousCommand() {
