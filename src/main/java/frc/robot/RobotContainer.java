@@ -36,10 +36,10 @@ public class RobotContainer {
 
     // autoChooser = AutoBuilder.buildAutoChooser();
 
-    m_drivetrain.setDefaultCommand(  // Call a command constantly it is for the main robot movment.
+    m_drivetrain.setDefaultCommand(  // Calls the command constantly it is for the main robot movment.
         new RunCommand(
           () -> m_drivetrain.drive(
-            applyDeadband(m_driverController::getLeftY, 0.1), // it was 3 inputs the x y and w which is for rotation
+            applyDeadband(m_driverController::getLeftY, 0.1), // there are 3 inputs the x y and w which is for rotation
             applyDeadband(m_driverController::getLeftX, 0.1), 
             applyDeadband(m_driverController::getRightX, 0.1)
           ),
@@ -52,7 +52,7 @@ public class RobotContainer {
 
       configureBindings();
   }
-  private DoubleSupplier applyDeadband(DoubleSupplier supplier, double deadband) { // Function so that it dosen't drift
+  private DoubleSupplier applyDeadband(DoubleSupplier supplier, double deadband) { // Function so that the controller dosen't drift
     return () -> {
         double value = supplier.getAsDouble();
         if (Math.abs(value) > deadband) {

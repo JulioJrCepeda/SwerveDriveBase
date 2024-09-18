@@ -30,7 +30,7 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
     private SwerveModuleState m_desiredState; // class for desired angle and velocity
     private double offset;
 
-    public SwerveModule(int driveMotorID, int turningMotorID, int CANCoderID, double offset) { // makes sure to connet the variable to there correct values.
+    public SwerveModule(int driveMotorID, int turningMotorID, int CANCoderID, double offset) { // makes sure to connect the variable to there correct values.
         m_driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
         m_turningMotor = new CANSparkMax(turningMotorID, MotorType.kBrushless);
 
@@ -56,7 +56,7 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
         m_desiredState = new SwerveModuleState();
     }
 
-    
+
     public void setDesiredState(SwerveModuleState desiredState) {
         //TODO Optimize the desired state to avoid unnecessary rotation
         //m_desiredState = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getEncoderAngle()));
