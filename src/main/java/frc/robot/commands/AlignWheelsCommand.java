@@ -19,7 +19,7 @@ public class AlignWheelsCommand extends Command {
     public void initialize() {
         timer.reset();
         timer.start();
-        drivetrain.OnCommand(true);
+        drivetrain.setEncoders();
     }
 
     @Override
@@ -36,6 +36,5 @@ public class AlignWheelsCommand extends Command {
     public void end(boolean interrupted) {
         timer.stop();
         drivetrain.resetEncoders();
-        drivetrain.OnCommand(false);
     }
 }

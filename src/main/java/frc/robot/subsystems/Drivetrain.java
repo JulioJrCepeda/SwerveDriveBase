@@ -113,16 +113,16 @@ public class Drivetrain extends SubsystemBase {
     }
 	
     public void resetEncoders(){
-        m_frontLeft.resetEncoder();
-        m_frontRight.resetEncoder();
-        m_backLeft.resetEncoder();
-        m_backRight.resetEncoder();
+        m_frontLeft.resetAngle();
+        m_frontRight.resetAngle();
+        m_backLeft.resetAngle();
+        m_backRight.resetAngle();
     }
-    public void OnCommand(boolean OnComamnd){
-        m_frontLeft.SetCommandState(OnComamnd);
-        m_frontRight.SetCommandState(OnComamnd);
-        m_backLeft.SetCommandState(OnComamnd);
-        m_backRight.SetCommandState(OnComamnd);
+    public void setEncoders(){
+        m_frontLeft.setAngle();
+        m_frontRight.setAngle();
+        m_backLeft.setAngle();
+        m_backRight.setAngle();
     }
 
 

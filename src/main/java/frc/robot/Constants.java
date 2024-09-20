@@ -18,7 +18,7 @@ public final class Constants {
     public static final double MAX_SPEED = 4.0;
 
 
-    public static final double DRIVE_GEAR_RATIO = 6.75; // How many rotation dose the Drive motor take for the wheel to spin once : 6.12, 6.75, 8.14
+    public static final double DRIVE_GEAR_RATIO = 5.9; // How many rotation dose the Drive motor take for the wheel to spin once
     public static final double GEAR_RATIO = 21.39;
 
     public static final double WHEEL_CIRCUMFERENCE = Math.PI * 0.1016; // used for odometry position in meters

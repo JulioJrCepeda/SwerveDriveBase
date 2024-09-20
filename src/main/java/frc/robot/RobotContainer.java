@@ -31,9 +31,6 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    CommandScheduler.getInstance().schedule(new AlignWheelsCommand(m_drivetrain));  // Calls a command once.
-
-
     // autoChooser = AutoBuilder.buildAutoChooser();
 
     m_drivetrain.setDefaultCommand(  // Calls the command constantly it is for the main robot movment.
@@ -46,6 +43,8 @@ public class RobotContainer {
           m_drivetrain
         )
       );
+
+      CommandScheduler.getInstance().schedule(new AlignWheelsCommand(m_drivetrain));  // Calls a command once.
 
       // SmartDashboard.putData("Auto Chooser", autoChooser);
 

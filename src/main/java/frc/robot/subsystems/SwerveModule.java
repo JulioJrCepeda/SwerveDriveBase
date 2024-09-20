@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
@@ -25,7 +26,6 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
     private final SparkPIDController m_drivePIDController;
     private final PIDController m_turningPIDController;
     private int id;
-    private boolean OnCommand;
 
     private SwerveModuleState m_desiredState; // class for desired angle and velocity
     private double offset;
@@ -39,9 +39,8 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
         absoluteEncoder = new CANcoder(CANCoderID);
         m_turningEncoder.setPosition(0);
 
-        this.offset = offset;
+        this.offset = offset; // offset is in degrees
         this.id = driveMotorID;
-        this.OnCommand = false;
 
         m_turningEncoder.setPositionConversionFactor(1.0/SwerveConstants.GEAR_RATIO);
         m_driveEncoder.setVelocityConversionFactor(1.0/SwerveConstants.DRIVE_GEAR_RATIO);
@@ -62,14 +61,14 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
         //m_desiredState = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getEncoderAngle()));
         m_desiredState = desiredState;
     }
-
-    public void SetCommandState(boolean onCommand){
-        m_turningPIDController.reset();
-        OnCommand = onCommand;
-    }
     
-    public void resetEncoder(){
+    public void resetAngle(){
         m_turningEncoder.setPosition(0);
+         m_desiredState.angle = Rotation2d.fromDegrees(0);
+    }
+    public void setAngle(){
+        m_turningEncoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble());
+        m_desiredState.angle = Rotation2d.fromDegrees(offset);
     }
 
     public void periodic() {
@@ -78,7 +77,7 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
 
         // Set the turning motor position
 		double angle = getEncoderAngle();
-        double desiredAngle = getDesiredAngle();
+        double desiredAngle = m_desiredState.angle.getRadians();;
         double turnOutput = m_turningPIDController.calculate(angle, desiredAngle);	
         m_turningMotor.set(turnOutput);
 
@@ -95,20 +94,8 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
         return (m_desiredState.speedMetersPerSecond * 60) / SwerveConstants.WHEEL_CIRCUMFERENCE;
     }
 
-    double getEncoderAngle(){
-        if(OnCommand){
-            return absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI;
-        } else {
-            return (m_turningEncoder.getPosition() % 1.0) * 2 * Math.PI;
-        }
-    }
-
-    double getDesiredAngle(){
-        if(OnCommand){
-            return Math.toRadians(offset);
-        } else {
-            return m_desiredState.angle.getRadians();
-        }
+    double getEncoderAngle(){ // in radians
+        return (m_turningEncoder.getPosition() % 1.0) * 2 * Math.PI;
     }
 
     //functions currently NOT in use!
