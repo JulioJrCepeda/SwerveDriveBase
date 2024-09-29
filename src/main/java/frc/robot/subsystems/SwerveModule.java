@@ -10,7 +10,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
@@ -64,11 +63,10 @@ public class SwerveModule extends SubsystemBase {	//this represents one of the f
     
     public void resetAngle(){
         m_turningEncoder.setPosition(0);
-         m_desiredState.angle = Rotation2d.fromDegrees(0);
     }
     public void setAngle(){
-        m_turningEncoder.setPosition(absoluteEncoder.getAbsolutePosition().getValueAsDouble());
-        m_desiredState.angle = Rotation2d.fromDegrees(offset);
+        m_turningPIDController.reset();
+        m_turningEncoder.setPosition(((absoluteEncoder.getAbsolutePosition().getValueAsDouble() - (offset/360)) + m_turningEncoder.getPosition()) % 1.0);
     }
 
     public void periodic() {
