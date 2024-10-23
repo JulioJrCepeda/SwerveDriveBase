@@ -19,23 +19,20 @@ public class AlignWheelsCommand extends Command {
     public void initialize() {
         timer.reset();
         timer.start();
-        drivetrain.OnCommand(true);
+        drivetrain.setEncoders();
     }
 
     @Override
     public void execute() {
-
     }
 
     @Override
     public boolean isFinished() {
-        return timer.get() > 3.0;
+        return timer.get() > 2.0;
     }
 
     @Override
     public void end(boolean interrupted) {
         timer.stop();
-        drivetrain.resetEncoders();
-        drivetrain.OnCommand(false);
     }
 }
